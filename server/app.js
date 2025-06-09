@@ -21,7 +21,8 @@ app.get('/', (req, res) => {
     res.send('API is running...');
 });
 
-
+// Import and use routes
+app.use('/api/auth', require('./routes/authRoutes'));
 
 // Define the port to listen on
 const PORT = process.env.PORT || 5000;
