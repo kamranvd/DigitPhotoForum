@@ -1,0 +1,18 @@
+
+/* Add these Tailwind directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Basic body styling */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif; /* Fallback to sans-serif */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
