@@ -5,7 +5,6 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const NewQuestionScreen = () => {
-    // useParams hook to get categoryId from the URL
     const { categoryId } = useParams();
     const navigate = useNavigate();
 
@@ -18,6 +17,18 @@ const NewQuestionScreen = () => {
     const [successMessage, setSuccessMessage] = useState('');
 
     const [categoryName, setCategoryName] = useState(''); // To display category name in breadcrumb
+    const [userInfo, setUserInfo] = useState(null); // ADDED: State to store user info
+
+    // Fetch user info from localStorage and set to state
+    useEffect(() => {
+        const storedUserInfo = localStorage.getItem('userInfo');
+        if (storedUserInfo) {
+            setUserInfo(JSON.parse(storedUserInfo));
+        } else {
+            // If no user info, redirect to login (should be handled by ProtectedRoute too)
+            navigate('/login');
+        }
+    }, [navigate]);
 
     // Fetch category name to display in the breadcrumb
     useEffect(() => {
@@ -67,7 +78,7 @@ const NewQuestionScreen = () => {
         }
 
         try {
-            const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+            // Now userInfo is available from component state
             if (!userInfo || !userInfo.token) {
                 navigate('/login'); // Redirect to login if no token
                 return;
@@ -89,7 +100,7 @@ const NewQuestionScreen = () => {
 
             setSuccessMessage('Question submitted successfully!');
             setTimeout(() => {
-                navigate(`/dashboard`); // Navigate back to dashboard to refresh questions
+                navigate(`/dashboard`); // Navigate back to dashboard, which will load the last selected category or prompt selection
             }, 1500); // Redirect after a short delay
 
         } catch (err) {
