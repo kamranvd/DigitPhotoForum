@@ -1,4 +1,4 @@
-// server/controllers/categoryController.js
+
 
 const Category = require('../models/category'); // Import the Category model
 
