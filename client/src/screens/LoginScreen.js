@@ -1,25 +1,31 @@
 
 
-import React, { useState } from 'react';
-import axios from 'axios'; // Import axios for API calls
+import React, { useState, useEffect } from 'react'; // Added useEffect
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavigate
 
 const LoginScreen = () => {
-    // State to hold username and password input values
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    // State to hold any error messages from login attempts
     const [error, setError] = useState('');
 
-    // Handle form submission
-    const submitHandler = async (e) => {
-        e.preventDefault(); // Prevent default form submission behavior
+    const navigate = useNavigate(); // Hook for programmatic navigation
 
-        setError(''); // Clear previous errors
+    // Check if user is already logged in on component load
+    useEffect(() => {
+        const userInfo = localStorage.getItem('userInfo');
+        if (userInfo) {
+            navigate('/dashboard'); // Redirect to dashboard if already logged in
+        }
+    }, [navigate]); 
+
+    const submitHandler = async (e) => {
+        e.preventDefault();
+        setError('');
 
         try {
-            // Make a POST request to your backend login API
             const { data } = await axios.post(
-                'http://localhost:5000/api/auth/login', // Your backend login endpoint
+                'http://localhost:5000/api/auth/login',
                 { username, password },
                 {
                     headers: {
@@ -28,13 +34,11 @@ const LoginScreen = () => {
                 }
             );
 
-            // If login is successful, store user data (e.g., token) in local storage
             localStorage.setItem('userInfo', JSON.stringify(data));
             console.log('Login successful:', data);
+            navigate('/dashboard'); // Redirect to dashboard after successful login
 
-            // TODO: Redirect to Dashboard after successful login   
         } catch (err) {
-            // Handle errors from the backend (e.g., invalid credentials)
             console.error('Login error:', err.response ? err.response.data : err.message);
             setError(err.response && err.response.data.message
                 ? err.response.data.message
@@ -91,10 +95,13 @@ const LoginScreen = () => {
                         >
                             Login
                         </button>
-                        {/* TODO: Add Register Link here later */}
-                        <a href="#" className="inline-block align-baseline font-bold text-sm text-blue-600 hover:text-blue-800">
+
+                        <Link
+                            to="/register"
+                            className="inline-block align-baseline font-bold text-sm text-blue-600 hover:text-blue-800"
+                        >
                             Don't have an account? Register
-                        </a>
+                        </Link>
                     </div>
                 </form>
             </div>
