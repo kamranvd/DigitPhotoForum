@@ -1,10 +1,11 @@
-// client/src/App.js
+
 
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
-import DashboardScreen from './screens/DashboardScreen'; // Import DashboardScreen
+import DashboardScreen from './screens/DashboardScreen';
+import NewQuestionScreen from './screens/NewQuestionScreen'; // Import NewQuestionScreen
 
 
 // This will check if user info exists in localStorage
@@ -35,14 +36,12 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-
-          {/* Placeholder for new question route */}
+          {/* Protected New Question Route */}
           <Route
             path="/category/:categoryId/new-question"
             element={
               <ProtectedRoute>
-                {/* This will be the NewQuestionScreen component */}
-                <div>New Question Form (Coming Soon)</div>
+                <NewQuestionScreen /> {/* Replaced placeholder with actual component */}
               </ProtectedRoute>
             }
           />
