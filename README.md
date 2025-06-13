@@ -1,7 +1,6 @@
 # Digital Photo Forum
 Forum for Asking Questions about Digital Products App
 
-- Kamran Niknia
 - Overview/description of the project
     - Users can login to ask questions about digital photography questions. They can also review what others have posted.
 - Details on how to use it or what functionality is offered
